@@ -1,0 +1,1 @@
+FieldName,FieldLocatorWEB_LOGIN_LINK,xpath=//a[@role='button' and @href='#signin-box']WEB_EMAIL_FIELD,id=identityWEB_PASSWORD_FIELD,id=passwordWEB_LOGIN_BUTTON,xpath=//input[@type='submit' and @value='Login']
