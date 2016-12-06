@@ -16,7 +16,3 @@ Open Frontend Url     [Arguments]    ${url}     ${username}      ${password}
     Input Text              ${LOCATORS.WEB_EMAIL_FIELD}           ${username}
     Input Text              ${LOCATORS.WEB_PASSWORD_FIELD}        ${password}
     Click Element           ${LOCATORS.WEB_LOGIN_BUTTON}
-
-Type to Input Field     [Arguments]    ${loactor}     ${value}
-    Click Element       ${loactor}
-    Input Text          ${loactor}     ${value}
