@@ -9,8 +9,8 @@ Test Teardown   Test Tear Down
 
 *** Test Cases ***
 Valid User Login
-    [Tags]       fundtube    regression      demo
-    [Documentation]     for demo purpose
+    [Tags]       fundtube    regression      login
+    [Documentation]     test valid login credentials
     #Get all data from csv file
     Get First Data From CSV     input   valid
 
@@ -22,8 +22,8 @@ Valid User Login
     Verify Text Is Present  $[csv:value(input,'MESSAGE')]
 
 Invalid User Login
-    [Tags]       fundtube    regression      demo
-    [Documentation]     for demo purpose
+    [Tags]       fundtube    regression      login
+    [Documentation]     test invalid email login credentials
     #Get all data from csv file
     Get First Data From CSV     input   invalidemail
 
@@ -35,8 +35,8 @@ Invalid User Login
     Verify Text Is Present  $[csv:value(input,'MESSAGE')]
 
 Incorrect User Password Login
-    [Tags]       fundtube    regression      demo
-    [Documentation]     for demo purpose
+    [Tags]       fundtube    regression      login
+    [Documentation]     test incorrect password login credentials
     #Get all data from csv file
     Get First Data From CSV     input   incorrectpassword
 
@@ -48,8 +48,8 @@ Incorrect User Password Login
     Verify Text Is Present  $[csv:value(input,'MESSAGE')]
 
 Blank Email And Password Login
-    [Tags]       fundtube    regression      demo
-    [Documentation]     for demo purpose
+    [Tags]       fundtube    regression      login
+    [Documentation]     test blank email and password
     #Get all data from csv file
     Get First Data From CSV     input   blank
 
