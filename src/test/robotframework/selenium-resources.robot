@@ -6,7 +6,7 @@ Library     Collections
 
 *** Variables ***
 ${POLL_MILLIS}      500
-${TIMEOUT_MILLIS}    20000
+${TIMEOUT_MILLIS}    30000
 ${FIELD_LOCATOR_MAPPING_LOCATION}     classpath:data/FieldMapping.csv
 
 
@@ -157,3 +157,29 @@ Verify Text Is Present   [Arguments]   ${data}
     :FOR  ${text}  IN  @{items}
     \   ${isTextPresentInPageSource}=   Is Text Present In Page Source      ${pageSource}   ${text}
     \   Should Be True                  ${isTextPresentInPageSource}
+
+Element Selected Value Should Be   [Arguments]   ${locator}     ${value}
+    [Documentation]    Verify Element Selected Value
+    ${value}=   Evaluate Data    ${value}
+    ${var}=     Get Selected List Value        ${locator}
+    Should Contain      ${var}      ${value}
+
+Click Element By Value   [Arguments]   ${locator}     ${value}
+    [Documentation]    Click Element By Value
+    ${value}=    Evaluate Data   ${value}
+    ${locator} =    Replace String  ${locator}  VALUE   ${value}
+    Click Element       ${locator}
+
+Get Video File Location   [Arguments]   ${video}
+    [Documentation]    get the absolute path of the video file
+    Log     ${EXECDIR}
+    ${location}=        Set Variable     ${EXECDIR}${/}src${/}test${/}resources${/}video${/}
+    ${video}=           Evaluate Data    ${video}
+    ${location}=        Set Variable   ${location}${video}
+    [return]        ${location}
+
+Element Text Value Should Be   [Arguments]   ${locator}     ${value}
+    [Documentation]    Element Text Value Should Be
+    ${value}=    Evaluate Data   ${value}
+    ${locator} =    Replace String  ${locator}  VALUE   ${value}
+    Element Should Be Visible       ${locator}
