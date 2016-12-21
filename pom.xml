@@ -114,15 +114,31 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>LocalFirefox</id>
+			<id>LocalFirefoxDev</id>
 			<properties>
 				<browser>firefox</browser>
+				<url>http://www.fundtube.com/dev/</url>
 			</properties>
 		</profile>
 		<profile>
-			<id>LocalChrome</id>
+			<id>LocalChromeDev</id>
 			<properties>
 				<browser>chrome</browser>
+				<url>http://www.fundtube.com/dev/</url>
+			</properties>
+		</profile>
+		<profile>
+			<id>LocalChromeProd</id>
+			<properties>
+				<browser>chrome</browser>
+				<url>http://www.fundtube.com/</url>
+			</properties>
+		</profile>
+		<profile>
+			<id>LocalFirefoxProd</id>
+			<properties>
+				<browser>firefox</browser>
+				<url>http://www.fundtube.com/</url>
 			</properties>
 		</profile>
 	</profiles>

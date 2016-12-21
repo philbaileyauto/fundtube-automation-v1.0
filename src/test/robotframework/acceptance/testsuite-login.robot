@@ -14,7 +14,7 @@ Valid User Login
     #Get all data from csv file
     Get First Data From CSV     input   valid
 
-    Navigate To Form        $[config:url.dev.fundtube]
+    Navigate To Form        $[config:url.fundtube]
     Click Element           ${LOCATORS.WEB_LOGIN_LINK}
     Input Text              ${LOCATORS.WEB_EMAIL_FIELD}           $[csv:value(input,'USERNAME')]
     Input Text              ${LOCATORS.WEB_PASSWORD_FIELD}        $[csv:value(input,'PASSWORD')]
@@ -27,7 +27,7 @@ Invalid User Login
     #Get all data from csv file
     Get First Data From CSV     input   invalidemail
 
-    Navigate To Form        $[config:url.dev.fundtube]
+    Navigate To Form        $[config:url.fundtube]
     Click Element           ${LOCATORS.WEB_LOGIN_LINK}
     Input Text              ${LOCATORS.WEB_EMAIL_FIELD}           $[csv:value(input,'USERNAME')]
     Input Text              ${LOCATORS.WEB_PASSWORD_FIELD}        $[csv:value(input,'PASSWORD')]
@@ -40,7 +40,7 @@ Incorrect User Password Login
     #Get all data from csv file
     Get First Data From CSV     input   incorrectpassword
 
-    Navigate To Form        $[config:url.dev.fundtube]
+    Navigate To Form        $[config:url.fundtube]
     Click Element           ${LOCATORS.WEB_LOGIN_LINK}
     Input Text              ${LOCATORS.WEB_EMAIL_FIELD}           $[csv:value(input,'USERNAME')]
     Input Text              ${LOCATORS.WEB_PASSWORD_FIELD}        $[csv:value(input,'PASSWORD')]
@@ -53,7 +53,7 @@ Blank Email And Password Login
     #Get all data from csv file
     Get First Data From CSV     input   blank
 
-    Navigate To Form        $[config:url.dev.fundtube]
+    Navigate To Form        $[config:url.fundtube]
     Click Element           ${LOCATORS.WEB_LOGIN_LINK}
     Input Text              ${LOCATORS.WEB_EMAIL_FIELD}           $[csv:value(input,'USERNAME')]
     Input Text              ${LOCATORS.WEB_PASSWORD_FIELD}        $[csv:value(input,'PASSWORD')]

@@ -20,14 +20,14 @@ Video Upload Scenario - Parent
     ${video_location}=  Get Video File Location     $[csv:value(input,'VIDEO_FILE')]
 
     #navigate to fundtube and upload video
-    Open Frontend Url           $[config:url.dev.fundtube]      $[csv:value(input,'PARENT_USERNAME')]      $[csv:value(input,'PARENT_PASSWORD')]
+    Open Frontend Url           $[config:url.fundtube]      $[csv:value(input,'PARENT_USERNAME')]      $[csv:value(input,'PARENT_PASSWORD')]
     Upload Video As Parent      ${event_name}   ${video_location}
 
     #logout parent user
     Logout To Fundtube
 
     #Login as admin user and approve submitted/uploaded video
-    Open Frontend Url           $[config:url.dev.fundtube]      $[csv:value(input,'ADMIN_USERNAME')]      $[csv:value(input,'ADMIN_PASSWORD')]
+    Open Frontend Url           $[config:url.fundtube]      $[csv:value(input,'ADMIN_USERNAME')]      $[csv:value(input,'ADMIN_PASSWORD')]
     Approve Uploaded Video      ${event_name}
 
     #verify and watch video
@@ -47,7 +47,7 @@ Video Upload Scenario - Admin
     ${video_location}=  Get Video File Location     $[csv:value(input,'VIDEO_FILE')]
 
     #navigate to fundtube and upload video
-    Open Frontend Url           $[config:url.dev.fundtube]      $[csv:value(input,'ADMIN_USERNAME')]      $[csv:value(input,'ADMIN_PASSWORD')]
+    Open Frontend Url           $[config:url.fundtube]      $[csv:value(input,'ADMIN_USERNAME')]      $[csv:value(input,'ADMIN_PASSWORD')]
     Upload Video As Admin       ${event_name}       ${video_location}
 
     #approve submitted/uploaded video
