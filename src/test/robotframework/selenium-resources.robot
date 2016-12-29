@@ -19,11 +19,12 @@ Set Field Mapping
     @{result}=  Get CSV List Result
 
     &{LOCATORS}=    Create Dictionary    key=value
-
+    ${value}=       Evaluate Data   $[config:url.fundtube]
     :FOR  ${row}  IN  @{result}
     \   El add variable     input           ${row}
     \   ${key} =            EL Evaluate     $[csv:value(input,'FieldName')]
     \   ${locator} =        EL Evaluate     $[csv:value(input,'FieldLocator')]
+    \   ${locator} =        Replace String  ${locator}      VALUE   ${value}
     \   Set TO Dictionary   ${LOCATORS}     ${key}=${locator}
 
     Set Global Variable     ${LOCATORS}    ${LOCATORS}
@@ -60,12 +61,14 @@ Set Config Data    [Arguments]    ${form}
     Select Config Domain    ${form}
     Parse CSV Resource  $[config:test.data]
     Set First CSV Row As Headers
+    Set Field Mapping
 
 Set Config And Test Data    [Arguments]    ${form}   ${testData}
     [Documentation]     Set the config property and test data to use by passing the form to test
     Select Config Domain    ${form}
     Parse CSV Resource  ${testData}
     Set First CSV Row As Headers
+    Set Field Mapping
 
 Element Text Should Not Be Empty     [Arguments]    ${locator}
     [Documentation]     Verify element text should not be empty or null
@@ -183,3 +186,15 @@ Element Text Value Should Be   [Arguments]   ${locator}     ${value}
     ${value}=    Evaluate Data   ${value}
     ${locator} =    Replace String  ${locator}  VALUE   ${value}
     Element Should Be Visible       ${locator}
+
+Element Should Be Visible By Value   [Arguments]   ${locator}     ${value}
+    [Documentation]    Element Should Be Visible By Value
+    ${value}=       Evaluate Data   ${value}
+    ${locator} =    Replace String  ${locator}  VALUE   ${value}
+    Element Should Be Visible      ${locator}
+
+Page Location Should Be   [Arguments]    ${value}
+    [Documentation]    Validate page url value
+    ${value}=       Evaluate Data   ${value}
+    ${currentURL}= 	Get Location
+    Should Contain     ${currentURL}   ${value}

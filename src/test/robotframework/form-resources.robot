@@ -10,13 +10,17 @@ ${MAX_RESULT_DISPLAY}    250
 
 
 *** Keywords ***
-Open Frontend Url     [Arguments]    ${url}     ${username}      ${password}
-    Navigate To Form        ${url}
+Open Fundtube
+    [Documentation]    open funtube website
+    Navigate To Form        $[config:url.fundtube]
+
+Open Fundtube and Login     [Arguments]     ${username}      ${password}
+    [Documentation]    Login to fundtube
+    Navigate To Form        $[config:url.fundtube]
     Click Element           ${LOCATORS.WEB_LOGIN_LINK}
     Input Text              ${LOCATORS.WEB_EMAIL_FIELD}           ${username}
     Input Text              ${LOCATORS.WEB_PASSWORD_FIELD}        ${password}
     Click Element           ${LOCATORS.WEB_LOGIN_BUTTON}
-
 
 Logout To Fundtube
     [Documentation]    Logout to fundtube
