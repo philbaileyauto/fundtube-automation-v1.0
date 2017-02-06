@@ -105,3 +105,94 @@ Verify Uploaded Video     [Arguments]    ${event_name}
     Element Should Be Visible   ${LOCATORS.VIDEO_IN_PAUSE}
     Click Element               ${LOCATORS.PLAY_VIDEO_BTN}
     Element Should Be Visible   ${LOCATORS.VIDEO_IN_PLAY}
+
+Delete User By Email     [Arguments]    ${email}
+    [Documentation]    Delete User By Email
+    Navigate To Form            $[config:url.fundtube]
+    Open Fundtube and Login     $[config:super.admin.username]      $[config:super.admin.password]
+    Click Element               ${LOCATORS.HOMEPAGE_USER_LINK}
+    Select From List By Value   ${LOCATORS.USER_FILTER_SELECT}            email
+    Input Text                  ${LOCATORS.USER_SEARCH_FIELD}            ${email}
+    Click Element               ${LOCATORS.USER_SEARCH_ICON}
+    Sleep   2s
+    ${isUserPresent}=           Is Element Present      ${LOCATORS.USER_DELETE_LINK}
+    Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.USER_DELETE_LINK}
+    Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.USER_DELETE_OKAY}
+    Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.HOMEPAGE_USER_LINK}
+    Run Keyword If  ${isUserPresent}        Select From List By Value   ${LOCATORS.USER_FILTER_SELECT}            email
+    Run Keyword If  ${isUserPresent}        Input Text          ${LOCATORS.USER_SEARCH_FIELD}   ${email}
+    Run Keyword If  ${isUserPresent}        Click Element               ${LOCATORS.USER_SEARCH_ICON}
+    Sleep   2s
+    Run Keyword If  ${isUserPresent}        Element Should Not Be Present       ${LOCATORS.USER_DELETE_LINK}
+
+
+
+Delete School By Name     [Arguments]    ${schoolName}
+    [Documentation]    Delete User By Email
+    Navigate To Form            $[config:url.fundtube]
+    Open Fundtube and Login     $[config:super.admin.username]      $[config:super.admin.password]
+    Click Element               ${LOCATORS.HOMEPAGE_SCHOOL_LINK}
+    Select From List By Value   ${LOCATORS.SCHOOL_FILTER_SELECT}            title
+    Input Text                  ${LOCATORS.SCHOOL_SEARCH_FIELD}            ${schoolName}
+    Click Element               ${LOCATORS.SCHOOL_SEARCH_ICON}
+    Sleep   2s
+    ${isUserPresent}=           Is Element Present              ${LOCATORS.SCHOOL_DELETE_LINK}
+    Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.SCHOOL_DELETE_LINK}
+    Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.SCHOOL_DELETE_OKAY}
+    Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.HOMEPAGE_SCHOOL_LINK}
+    Run Keyword If  ${isUserPresent}        Select From List By Value   ${LOCATORS.SCHOOL_FILTER_SELECT}            title
+    Run Keyword If  ${isUserPresent}        Input Text          ${LOCATORS.SCHOOL_SEARCH_FIELD}   ${schoolName}
+    Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.SCHOOL_SEARCH_ICON}
+    Sleep   2s
+    Run Keyword If  ${isUserPresent}        Element Should Not Be Present       ${LOCATORS.SCHOOL_DELETE_LINK}
+
+
+Activate User By Email     [Arguments]    ${email}  ${password}
+    [Documentation]     activate user by its email
+    Open Mail Session   imaps
+    Set Mail Auth   imap.gmail.com  ${email}    ${password}
+    Set Mail Folder     INBOX
+    ${count}=   Get Folder Message Count
+    Log     ${count}
+    Should Not Be Equal     ${count}    0   Does not received Email Activation
+    ${message} =    Get Message By Subject      Welcome to FundTube!
+    ${matches} =   Get Regexp Matches  ${message}      (?<=href=").*?(?=">click here)
+
+    ${href}=    Get From List   ${matches}  0
+    Navigate To Form        ${href}
+    Delete All Messages
+
+Create Parent User Account
+    [Documentation]     create a parent user account
+    Click Element                       ${LOCATORS.WEB_SIGN_UP}
+    Element Should Be Visible           ${LOCATORS.SIGN_UP_PARENT_TAB}
+    Element Should Be Visible           ${LOCATORS.SIGN_UP_ADMIN_TAB}
+
+    # Enter valid Profile sign up information and select Join
+    Input Text                  ${LOCATORS.SIGN_UP_EMAIL_FIELD}                 $[csv:value(input,'EMAIL')]
+    Input Text                  ${LOCATORS.SIGN_UP_PASSWORD_FIELD}              $[csv:value(input,'PASSWORD')]
+    Input Text                  ${LOCATORS.SIGN_UP_CONFIRM_PASSWORD_FIELD}      $[csv:value(input,'PASSWORD')]
+    Input Text                  ${LOCATORS.SIGN_UP_FIRSTNAME_FIELD}             $[csv:value(input,'FIRSTNAME')]
+    Input Text                  ${LOCATORS.SIGN_UP_LASTNAME_FIELD}              $[csv:value(input,'LASTNAME')]
+    Select From List By Value   ${LOCATORS.SIGN_UP_MONTH_SELECT}                $[csv:value(input,'BIRTH_MONTH')]
+    Select From List By Value   ${LOCATORS.SIGN_UP_DAY_SELECT}                  $[csv:value(input,'BIRTH_DAY')]
+    Select From List By Value   ${LOCATORS.SIGN_UP_YEAR_SELECT}                 $[csv:value(input,'BIRTH_YEAR')]
+    Click Element               ${LOCATORS.SIGN_UP_JOIN_BTN}
+    Sleep   2s
+    Element Should Be Visible   ${LOCATORS.SIGN_UP_DONOR_TY_MESSAGE}
+    Click Element               ${LOCATORS.SIGN_UP_PARENT_OK_BTN}
+    Element Should Be Visible   ${LOCATORS.HOMEPAGE_MAIN_IMG}
+
+    # Activation email:
+    Activate User By Email      $[csv:value(input,'EMAIL')]     $[csv:value(input,'EMAIL_PASSWORD')]
+
+    Click Element           ${LOCATORS.WEB_LOGIN_LINK}
+    Input Text              ${LOCATORS.WEB_EMAIL_FIELD}           $[csv:value(input,'EMAIL')]
+    Input Text              ${LOCATORS.WEB_PASSWORD_FIELD}        $[csv:value(input,'PASSWORD')]
+    Click Element           ${LOCATORS.WEB_LOGIN_BUTTON}
+    Logout To Fundtube
+
+
+Test Tear Down With Cleanup
+    Delete All Cookies
+    Capture Screenshot

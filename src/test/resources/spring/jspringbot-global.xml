@@ -10,4 +10,5 @@
  <import resource="classpath:spring/spring-config.xml"/>
  <import resource="classpath:spring/spring-csv.xml"/>
  <import resource="classpath:spring/spring-prettyprint.xml"/>
+ <import resource="classpath:spring/spring-mail.xml"/>
 </beans>

@@ -6,7 +6,7 @@ Library     Collections
 
 *** Variables ***
 ${POLL_MILLIS}      500
-${TIMEOUT_MILLIS}    30000
+${TIMEOUT_MILLIS}    90000
 ${FIELD_LOCATOR_MAPPING_LOCATION}     classpath:data/FieldMapping.csv
 
 
@@ -32,6 +32,7 @@ Set Field Mapping
 Test Tear Down
     Delete All Cookies
     Capture Screenshot
+
 
 Navigate To Form    [Arguments]    ${url}
     [Documentation]     Go/Navigate to a given url
@@ -59,16 +60,18 @@ Evaluate Data     [Arguments]    ${data}
 Set Config Data    [Arguments]    ${form}
     [Documentation]     Set the config property to use by passing the form to test
     Select Config Domain    ${form}
+    Set Field Mapping
     Parse CSV Resource  $[config:test.data]
     Set First CSV Row As Headers
-    Set Field Mapping
+
 
 Set Config And Test Data    [Arguments]    ${form}   ${testData}
     [Documentation]     Set the config property and test data to use by passing the form to test
     Select Config Domain    ${form}
+    Set Field Mapping
     Parse CSV Resource  ${testData}
     Set First CSV Row As Headers
-    Set Field Mapping
+
 
 Element Text Should Not Be Empty     [Arguments]    ${locator}
     [Documentation]     Verify element text should not be empty or null
