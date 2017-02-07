@@ -2,8 +2,8 @@
 Resource    ../selenium-resources.robot
 Resource    ../form-resources.robot
 
-Suite Setup     Set Config And Test Data    web     $[config:signup.test.data]
-Test Teardown   Test Tear Down
+Suite Setup     Set Config And Test Data        web     $[config:signup.test.data]
+Test Teardown   Test Tear Down With Cleanup     $[csv:value(input,'EMAIL')]
 
 
 *** Test Cases ***
@@ -11,6 +11,8 @@ Validation Signup And Subscription 1
     [Tags]      regression      subscription
     [Documentation]     Not Logged In:  Nav between Login and Sign Up
     #navigate to fundtube
+    #Get all data from csv file
+    Get First Data From CSV     input   parent
     Open Fundtube
 
     #navigate between Login and Sign Up modal
@@ -40,7 +42,7 @@ Validation Signup And Subscription 1
     Element Should Not Be Visible       ${LOCATORS.SIGN_UP_ADMIN_TAB}
 
 Validation Signup And Subscription 2
-    [Tags]      regression      subscription
+    [Tags]      regression      subscription1
     [Documentation]     Not Logged In: Login via popup and Subscribe
     #Get all data from csv file
     Get First Data From CSV     input   parent
@@ -101,8 +103,8 @@ Validation Signup And Subscription 2
     Sleep   2s
 
     # Delete user
-    Logout To Fundtube
-    Delete User By Email            $[csv:value(input,'EMAIL')]
+    #Logout To Fundtube
+    #Delete User By Email            $[csv:value(input,'EMAIL')]
 
 Validation Signup And Subscription 3
     [Tags]      regression      subscription
@@ -185,8 +187,8 @@ Validation Signup And Subscription 3
     Sleep   2s
 
     # Delete user
-    Logout To Fundtube
-    Delete User By Email            $[csv:value(input,'EMAIL')]
+    #Logout To Fundtube
+    #Delete User By Email            $[csv:value(input,'EMAIL')]
 
 Validation Signup And Subscription 4
     [Tags]      regression      subscription
@@ -273,11 +275,11 @@ Validation Signup And Subscription 4
     Sleep   2s
 
     # Delete user
-    Logout To Fundtube
-    Delete User By Email            $[csv:value(input,'EMAIL')]
+    #Logout To Fundtube
+    #Delete User By Email            $[csv:value(input,'EMAIL')]
 
 Validation Signup And Subscription 5
-    [Tags]      regression      subscription2
+    [Tags]
     [Documentation]     Sign Up via popup :  Activate as School/Admin (user-entered info)
     #Get all data from csv file
     Get First Data From CSV     input   parent

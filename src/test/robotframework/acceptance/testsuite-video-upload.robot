@@ -2,8 +2,7 @@
 Resource    ../selenium-resources.robot
 Resource    ../form-resources.robot
 
-Suite Setup     Set Field Mapping
-Test Setup      Set Config And Test Data     web     $[config:upload.video.test.data]
+Suite Setup     Set Config And Test Data        web     $[config:upload.video.test.data]
 Test Teardown   Test Tear Down
 
 

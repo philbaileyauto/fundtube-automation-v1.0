@@ -173,7 +173,7 @@ Element Selected Value Should Be   [Arguments]   ${locator}     ${value}
 Click Element By Value   [Arguments]   ${locator}     ${value}
     [Documentation]    Click Element By Value
     ${value}=    Evaluate Data   ${value}
-    ${locator} =    Replace String  ${locator}  VALUE   ${value}
+    ${locator} =    Replace String  ${locator}  FIELD_DATA   ${value}
     Click Element       ${locator}
 
 Get Video File Location   [Arguments]   ${video}

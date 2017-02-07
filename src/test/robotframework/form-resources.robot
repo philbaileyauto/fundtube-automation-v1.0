@@ -24,8 +24,9 @@ Open Fundtube and Login     [Arguments]     ${username}      ${password}
 
 Logout To Fundtube
     [Documentation]    Logout to fundtube
-    Click Element               ${LOCATORS.LOGOUT_LINK}
-    Wait For Visible            ${LOCATORS.LOGOUT_MESSAGE}
+    ${isLogout}=                Is Element Present      ${LOCATORS.LOGOUT_LINK}
+    Run Keyword If  ${isLogout}        Click Element               ${LOCATORS.LOGOUT_LINK}
+    Run Keyword If  ${isLogout}        Wait For Visible            ${LOCATORS.LOGOUT_MESSAGE}
 
 
 Upload Video As Admin     [Arguments]    ${event_name}      ${video_location}
@@ -108,6 +109,8 @@ Verify Uploaded Video     [Arguments]    ${event_name}
 
 Delete User By Email     [Arguments]    ${email}
     [Documentation]    Delete User By Email
+    ${email} =  Evaluate Data   ${email}
+
     Navigate To Form            $[config:url.fundtube]
     Open Fundtube and Login     $[config:super.admin.username]      $[config:super.admin.password]
     Click Element               ${LOCATORS.HOMEPAGE_USER_LINK}
@@ -118,17 +121,17 @@ Delete User By Email     [Arguments]    ${email}
     ${isUserPresent}=           Is Element Present      ${LOCATORS.USER_DELETE_LINK}
     Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.USER_DELETE_LINK}
     Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.USER_DELETE_OKAY}
-    Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.HOMEPAGE_USER_LINK}
-    Run Keyword If  ${isUserPresent}        Select From List By Value   ${LOCATORS.USER_FILTER_SELECT}            email
-    Run Keyword If  ${isUserPresent}        Input Text          ${LOCATORS.USER_SEARCH_FIELD}   ${email}
-    Run Keyword If  ${isUserPresent}        Click Element               ${LOCATORS.USER_SEARCH_ICON}
-    Sleep   2s
-    Run Keyword If  ${isUserPresent}        Element Should Not Be Present       ${LOCATORS.USER_DELETE_LINK}
+    #Run Keyword If  ${isUserPresent}        Click Element       ${LOCATORS.HOMEPAGE_USER_LINK}
+    #Run Keyword If  ${isUserPresent}        Select From List By Value   ${LOCATORS.USER_FILTER_SELECT}            email
+    #Run Keyword If  ${isUserPresent}        Input Text          ${LOCATORS.USER_SEARCH_FIELD}   ${email}
+    #Run Keyword If  ${isUserPresent}        Click Element               ${LOCATORS.USER_SEARCH_ICON}
+    #Sleep   2s
+    #Run Keyword If  ${isUserPresent}        Element Should Not Be Present       ${LOCATORS.USER_DELETE_LINK}
 
 
 
 Delete School By Name     [Arguments]    ${schoolName}
-    [Documentation]    Delete User By Email
+    [Documentation]    Delete school By schoolName
     Navigate To Form            $[config:url.fundtube]
     Open Fundtube and Login     $[config:super.admin.username]      $[config:super.admin.password]
     Click Element               ${LOCATORS.HOMEPAGE_SCHOOL_LINK}
@@ -154,7 +157,7 @@ Activate User By Email     [Arguments]    ${email}  ${password}
     Set Mail Folder     INBOX
     ${count}=   Get Folder Message Count
     Log     ${count}
-    Should Not Be Equal     ${count}    0   Does not received Email Activation
+    Should Not Be Equal As Integers     ${count}    0   Does not received Email Activation
     ${message} =    Get Message By Subject      Welcome to FundTube!
     ${matches} =   Get Regexp Matches  ${message}      (?<=href=").*?(?=">click here)
 
@@ -193,6 +196,8 @@ Create Parent User Account
     Logout To Fundtube
 
 
-Test Tear Down With Cleanup
+Test Tear Down With Cleanup    [Arguments]    ${email}
+    Logout To Fundtube
+    Delete User By Email            ${email}
     Delete All Cookies
     Capture Screenshot
